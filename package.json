@@ -1,0 +1,15 @@
+{
+  "name": "ai-steemit-auto",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "scripts/post.js",
+  "scripts": {
+    "generate": "node scripts/generate.js",
+    "post": "node scripts/post.js",
+    "auto": "npm run generate && npm run post"
+  },
+  "dependencies": {
+    "openai": "^4.0.0",
+    "dsteem": "^0.10.1"
+  }
+}
