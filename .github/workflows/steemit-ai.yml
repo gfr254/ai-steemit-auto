@@ -1,0 +1,31 @@
+name: AI Steemit Auto Post
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # UTC 0:00 = JST 09:00
+  workflow_dispatch:
+
+jobs:
+  auto_post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - run: npm install
+
+      - name: Generate AI Article
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/generate.js
+
+      - name: Post to Steemit
+        env:
+          STEEM_POST_KEY: ${{ secrets.STEEM_POST_KEY }}
+          STEEM_USERNAME: ${{ secrets.STEEM_USERNAME }}
+        run: node scripts/post.js
